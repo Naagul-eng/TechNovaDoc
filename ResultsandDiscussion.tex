@@ -1,0 +1,47 @@
+\section{Results and Discussion}
+
+The complete system was assembled and tested. The performance of each functional block was evaluated, and the results are summarised in Table~\ref{tab:specs} and Table~\ref{tab:ldr}.
+
+\begin{table}[H]
+    \centering
+    \caption{System Specifications}
+    \label{tab:specs}
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Parameter} & \textbf{Details} \\
+        \midrule
+        Main controller & ESP32-WROOM-32E (16MB Flash) \\
+        Supply voltage (mains input) & 230V AC \\
+        Regulated supply (to ESP32) & 3.3V DC (via AMS1117-3.3) \\
+        Regulated supply (to relay, GSM) & 5V DC (via HLK-20M05) \\
+        Light sensor & LDR (02LDR1) with 10k$\Omega$ pull-up \\
+        Current sensor & ACS712 \\
+        Fault alert method & SMS via EVB GSM 800L \\
+        Relay type & SRD-05VDC-SL-C (SPDT) \\
+        Switching transistor & 2N2222 NPN \\
+        Flyback protection & 1N4007 diode \\
+        PCB layers & 2 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{LDR Switching Performance}
+    \label{tab:ldr}
+    \begin{tabular}{ccc}
+        \toprule
+        \textbf{Ambient Light Level} & \textbf{LDR Output (V)} & \textbf{Relay State} \\
+        \midrule
+        Bright daylight & $>$2.5 & OFF \\
+        Overcast / dim & 1.5 -- 2.5 & Configurable \\
+        Night / darkness & $<$1.5 & ON \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The system correctly switched the relay on when the LDR reading fell below the darkness threshold and switched it off when the reading rose above the daylight threshold. The ACS712 current sensor successfully distinguished between normal operation (relay on, bulb drawing current) and fault conditions (relay on, but no current flowing, indicating bulb failure or open circuit). When a fault was simulated by disconnecting the load while the relay was on, the ESP32 detected the fault and the GSM module sent an SMS alert within approximately 5 to 10 seconds.
+
+The complete schematic, with all components and connections clearly labelled, is shown in Figure~\ref{fig:schematic}. The PCB layout, showing the physical arrangement of components on the board, is shown in Figure~\ref{fig:pcb}.
+
+Overall, the system met all of the design objectives. It provides automatic day/night switching, real-time current monitoring for fault detection, and immediate SMS notification when a fault occurs. The total component cost was kept low, making the system suitable for deployment by municipal councils with limited budgets.

@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage[top=20mm,left=20mm,right=15mm]{geometry}
+\begin{document}
+
+\vspace{0.5cm}
+\section{Introduction}
+
+\subsection{Background}
+
+This project was carried out as part of the EN1190 module during our second semester. The main goal of the module was to design an electronic solution to a real problem that exists in society. After thinking about several options, we decided to focus on an issue that affects many people every day: the management of streetlights in urban and semi-urban areas.
+
+Streetlights are essential for public safety at night. However, in many areas, they are not managed efficiently. Some lights remain on during the day, wasting electricity. Others fail and remain undetected for days, leaving roads in the dark and putting people at risk. These problems are mainly caused by the lack of an automated system that can control streetlights based on actual light conditions and detect faults as soon as they happen.
+
+We decided to address this problem bAy designing a system that can automatically control streetlights and immediately report any faults to the relevant authority.
+
+\subsection{Problem Statement}
+
+Municipal councils in Sri Lanka spend a significant amount on electricity for streetlights. A large portion of this cost comes from lights that stay on during daytime, either because manual switching is unreliable or because time-based systems are not accurately configured. At the same time, when a streetlight fails, it is usually discovered only after a public complaint or a scheduled inspection. This delay means that faulty streetlights can remain broken for several days, creating safety risks and increasing maintenance costs. There is a clear need for a system that can control streetlights automatically and report faults without any human intervention.
+
+\subsection{Objectives}
+
+The main objectives of this project are:
+\begin{itemize}
+    \item To design a circuit that automatically switches streetlights on and off based on the surrounding light level.
+    \item To detect faults in streetlights by monitoring the current through the load.
+    \item To send an SMS alert to the responsible person when a fault is detected.
+    \item To build and test a working prototype on a custom PCB
+\end{itemize}
+
+\subsection{Scope}
+
+This project focuses on a single streetlight control unit that can be installed on an existing streetlight pole. The unit monitors the ambient light using an LDR sensor and controls the light using a relay. It continuously monitors the current through the bulb and sends an SMS via a GSM module if the current reading indicates a fault. The system is powered directly from the mains supply using an on-board AC-to-DC converter.
+
+\subsection{Methodology Overview}
+
+The project began with a problem validation phase, where a structured questionnaire was distributed to people in municipal councils to confirm that the identified problems were genuine and that the proposed solution would be useful. Based on the validation results, the hardware design was started. The circuit was drawn in Altium and then transferred to a PCB layout. Individual components were tested separately before being combined into a full working system. The complete system was then tested to check whether it met the design objectives.
+
+
+
+
+\end{document}
+

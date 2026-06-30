@@ -1,0 +1,308 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{xcolor}
+
+\usepackage{multirow}
+\usepackage{pifont}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+% ── Hyperref setup ────────────────────────────────────────────────────────────
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black,
+    pdftitle={Automatic Streetlight Control and Fault Detection System},
+    pdfauthor={EN1190 Engineering Design Project}
+}
+
+% ── Page style ────────────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+%\fancyhead[L]{\small Automatic Streetlight Control and Fault Detection System}
+\fancyhead[R]{\small EN1190 Engineering Design Project}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Section formatting ────────────────────────────────────────────────────────
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% ── Line spacing ──────────────────────────────────────────────────────────────
+\setstretch{1.25}
+
+% ── Caption style ─────────────────────────────────────────────────────────────
+\captionsetup{font=small, labelfont=bf}
+
+% ── TOC depth ─────────────────────────────────────────────────────────────────
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+%═══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+%───────────────────────────── TITLE PAGE ─────────────────────────────────────
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    {\LARGE \textbf{Automatic Streetlight Control and\\[0.3cm] Fault Detection System}}\\[0.5cm]
+    {\large Project Report}\\[1.5cm]
+
+    \fbox{\parbox{4cm}{\centering\vspace{1cm}\textit{University Logo}\vspace{1cm}}}\\[1.2cm]
+
+    \begin{tabular}{ll}
+        \textbf{Names:} & N.Naagul \\
+                        & R.Prasanna \\
+                        & B.Sathursan \\[0.4cm]
+                        
+        \textbf{Group:} & Tech Nova \\[0.2cm]
+        \textbf{Module:} & EN1190 \\[0.2cm]
+        \textbf{Index Numbers:} & 240445H \\
+                                & 240525E \\
+                                & 240602M \\[0.4cm]
+                                
+        \textbf{Date of Submission:} & \today \\
+    \end{tabular}
+
+    \vfill
+    {\small University of Moratuwa}
+\end{titlepage}
+
+%───────────────────────────── ABSTRACT ───────────────────────────────────────
+\newpage
+\pagenumbering{roman}
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+This project presents an automated streetlight control and fault detection system designed to minimize energy waste and speed up maintenance for municipal councils. Traditional streetlights often suffer from inefficient daytime operation and delayed fault reporting. To address this, the proposed system uses a central microcontroller integrated with natural light sensing for automated day/night switching, and current monitoring to detect bulb or wiring failures. When an anomaly is detected, a cellular module immediately alerts the responsible staff. The hardware architecture features built-in power regulation and automated load switching, packaged into a custom-designed Printed Circuit Board (PCB). Validated through stakeholder surveys, this low-cost, reliable system optimizes streetlight management, significantly reducing energy consumption while enhancing public safety.
+
+\newpage
+%───────────────────────── LIST OF FIGURES ────────────────────────────────────
+\listoffigures
+\addcontentsline{toc}{section}{List of Figures}
+
+\newpage
+%───────────────────────── LIST OF TABLES ─────────────────────────────────────
+\listoftables
+\addcontentsline{toc}{section}{List of Tables}
+
+\newpage
+%─────────────────────── TABLE OF CONTENTS ────────────────────────────────────
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+
+
+\section{Recommendations}
+
+Based on the experience gained during this project, we make the following recommendations for anyone looking to build or extend a similar system.
+
+\subsection{Use a Stable Power Supply for the GSM Module}
+
+The GSM module is the most power-hungry component in the system. A power supply that cannot deliver enough current will cause the module to reset or fail during SMS transmission. We recommend using large bulk capacitors (at least 1000\,$\mu$F) close to the module's power pins and ensuring that the supply can deliver at least 2A peak current.
+
+\subsection{Add Averaging to Sensor Readings}
+
+Both the LDR and the ACS712 produce noisy readings. Using a simple moving average (taking several readings and computing their mean) significantly reduces false triggers and improves the reliability of the system.
+
+\subsection{Protect the Circuit from the Environment}
+
+A streetlight controller will be installed outdoors and must withstand heat, humidity, and dust. We recommend placing the PCB in a sealed enclosure with an IP54 or better rating. Cable glands should be used for all wiring entries to prevent water ingress.
+
+\subsection{Include Overvoltage and Overcurrent Protection}
+
+Mains-connected circuits can be exposed to voltage surges and transients. We recommend adding a metal oxide varistor (MOV) across the mains input to protect against voltage surges, and a fuse on the mains input to protect against overcurrent faults.
+
+\subsection{Test the GSM Coverage Before Installation}
+
+The GSM module requires adequate mobile network coverage to send SMS alerts. Before installing the system, the GSM signal strength at the intended installation location should be checked to ensure that alerts will be delivered reliably.
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Individual Contributions}
+
+\subsection{[Student 1 Name]}
+
+[Student 1] was responsible for the overall circuit schematic design. This included selecting components, drawing the schematic in the design tool, and verifying that all connections were correct. [Student 1] also designed and tested the relay switching circuit and the power supply section.
+
+\subsection{[Student 2 Name]}
+
+[Student 2] was responsible for the PCB layout. This included placing components on the board, routing traces, and ensuring that the layout met safety and manufacturing requirements. [Student 2] also managed the PCB fabrication order.
+
+\subsection{[Student 3 Name]}
+
+[Student 3] was responsible for the microcontroller firmware. This included writing the Arduino code for the LDR-based switching, the ACS712 fault detection, and the GSM SMS sending. [Student 3] also carried out the component-level testing of each hardware block.
+
+\subsection{[Student 4 Name]}
+
+[Student 4] was responsible for the problem validation survey. This included designing the questionnaire, distributing it to respondents, analysing the results, and documenting the findings. [Student 4] also led the preparation of this project report.
+
+%═══════════════════════════════════════════════════════════════════════════════
+% Bibliography
+\newpage
+\begin{thebibliography}{9}
+
+\bibitem{esp32}
+Espressif Systems.
+\textit{ESP32-WROOM-32E Datasheet}, 2022.
+Available at: \url{https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf}
+
+\bibitem{acs712}
+Allegro MicroSystems.
+\textit{ACS712 Fully Integrated, Hall Effect-Based Linear Current Sensor Datasheet}, 2020.
+Available at: \url{https://www.allegromicro.com/en/products/sense/current-sensor-ics/zero-to-fifty-amp-integrated-conductor-sensor-ics/acs712}
+
+\bibitem{hlk}
+Hi-Link Electronics.
+\textit{HLK-20M05 Power Module Datasheet}.
+Available at: \url{https://www.hlktech.net}
+
+\bibitem{ams1117}
+Advanced Monolithic Systems.
+\textit{AMS1117 1A Low Dropout Voltage Regulator Datasheet}.
+Available at: \url{http://www.advanced-monolithic.com/pdf/ds1117.pdf}
+
+\bibitem{sim800l}
+SIMCOM.
+\textit{SIM800L Hardware Design Manual}, 2015.
+Available at: \url{https://www.makerhero.com/img/files/download/Datasheet_SIM800L.pdf}
+
+\bibitem{relay}
+Songle.
+\textit{SRD-05VDC-SL-C Relay Datasheet}.
+Available at: \url{https://components101.com/switches/5v-single-channel-relay-module-pinout-features-applications-working-datasheet}
+
+\bibitem{2n2222}
+ON Semiconductor.
+\textit{2N2222 NPN General-Purpose Amplifier Datasheet}, 2014.
+Available at: \url{https://www.onsemi.com/pdf/datasheet/p2n2222a-d.pdf}
+
+\bibitem{1n4007}
+Vishay.
+\textit{1N4007 General Purpose Rectifier Datasheet}, 2021.
+Available at: \url{https://www.vishay.com/docs/88503/1n4007.pdf}
+
+\end{thebibliography}
+
+%═══════════════════════════════════════════════════════════════════════════════
+% Appendices
+\newpage
+\appendix
+\section{Appendices}
+
+\subsection{Component Datasheets}
+
+\begin{itemize}
+    \item ESP32-WROOM-32E Datasheet: \url{https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf}
+    \item ACS712 Datasheet: \url{https://www.allegromicro.com/en/products/sense/current-sensor-ics/acs712}
+    \item HLK-20M05 Datasheet: \url{https://www.hlktech.net}
+    \item AMS1117-3.3 Datasheet: \url{http://www.advanced-monolithic.com/pdf/ds1117.pdf}
+    \item SIM800L Datasheet: \url{https://www.makerhero.com/img/files/download/Datasheet_SIM800L.pdf}
+    \item SRD-05VDC-SL-C Relay: \url{https://components101.com/switches/5v-single-channel-relay-module-pinout-features-applications-working-datasheet}
+    \item 2N2222 Transistor: \url{https://www.onsemi.com/pdf/datasheet/p2n2222a-d.pdf}
+    \item 1N4007 Diode: \url{https://www.vishay.com/docs/88503/1n4007.pdf}
+\end{itemize}
+
+\subsection{Problem Validation Questionnaire}
+
+The following questionnaire was used to validate the problem before starting the design phase.
+
+\bigskip
+\noindent\textbf{Automatic Streetlight Control and Fault Detection System --- Problem Validation Questionnaire}\\
+\textit{EN1190 Engineering Design Project, University of Moratuwa}
+
+\begin{enumerate}
+    \item What type of streetlights are mainly used in your area?
+    \begin{enumerate}[label=\alph*.]
+        \item LED \quad b. Sodium Vapour \quad c. CFL \quad d. Mixed
+    \end{enumerate}
+
+    \item How are streetlights currently switched ON and OFF?
+    \begin{enumerate}[label=\alph*.]
+        \item Manual Switching \quad b. Time-based system \quad c. LDR sensor \quad d. Centralised Control
+    \end{enumerate}
+
+    \item How often do you observe streetlights remaining ON during daytime?
+    \begin{enumerate}[label=\alph*.]
+        \item Frequently \quad b. Occasionally \quad c. Rarely \quad d. Never
+    \end{enumerate}
+
+    \item How often do streetlight faults occur in your area?
+    \begin{enumerate}[label=\alph*.]
+        \item Very often \quad b. Often \quad c. Rarely \quad d. Very Rarely
+    \end{enumerate}
+
+    \item What are the common types of faults experienced?
+    \begin{enumerate}[label=\alph*.]
+        \item Bulb failure \quad b. Power supply failure \quad c. Wiring damage \quad d. Control unit failure \quad e. Other
+    \end{enumerate}
+
+    \item How are streetlight faults usually detected?
+    \begin{enumerate}[label=\alph*.]
+        \item Public complaints \quad b. Routine inspection \quad c. Maintenance staff observation \quad d. No fixed method
+    \end{enumerate}
+
+    \item On average, how long does it take to identify a faulty streetlight?
+    \begin{enumerate}[label=\alph*.]
+        \item Within 24 hours \quad b. 1--3 days \quad c. More than 3 days
+    \end{enumerate}
+
+    \item What problems arise due to delayed fault detection?
+    \begin{enumerate}[label=\alph*.]
+        \item Increased energy wastage \quad b. Public safety concerns \quad c. Increased maintenance cost \quad d. Public complaints
+    \end{enumerate}
+
+    \item Is energy wastage due to streetlights a concern for the council?
+    \begin{enumerate}[label=\alph*.]
+        \item Yes \quad b. No \quad c. Not Sure
+    \end{enumerate}
+
+    \item Would an automatic ON/OFF control system be beneficial?
+    \begin{enumerate}[label=\alph*.]
+        \item Yes \quad b. No \quad c. Maybe
+    \end{enumerate}
+
+    \item Would a system that automatically detects and reports streetlight faults be useful?
+    \begin{enumerate}[label=\alph*.]
+        \item Very Useful \quad b. Useful \quad c. Not Useful
+    \end{enumerate}
+
+    \item What are the main concerns regarding such a system?
+    \begin{enumerate}[label=\alph*.]
+        \item Installation cost \quad b. Maintenance complexity \quad c. Reliability \quad d. Safety \quad e. Other
+    \end{enumerate}
+
+    \item Do you have any suggestions or comments regarding improving streetlight management?\\
+    \rule{\linewidth}{0.4pt}\\
+    \rule{\linewidth}{0.4pt}
+\end{enumerate}
+
+\subsection{Acknowledgements}
+
+We sincerely thank the lab staff at the Analog Lab for their support and for accommodating our lab sessions. We also thank the administrative staff at ENTC for providing the equipment and resources needed for our experiments. We are grateful to Dr.\ Pasqual and our fellow batchmates for their guidance and encouragement throughout the project.
+
+\end{document}

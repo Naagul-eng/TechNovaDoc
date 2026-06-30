@@ -1,0 +1,34 @@
+\documentclass{article}
+\usepackage[top=20mm,left=20mm,right=15mm]{geometry}
+\begin{document}
+\section{Conclusion}
+
+\subsection{Summary of Findings}
+
+This project successfully designed and built a prototype of an automatic streetlight control and fault detection system. 
+The system uses an ESP32-WROOM-32E microcontroller connected to an LDR sensor for ambient light detection, an ACS712 current sensor for fault detection, a relay module for switching the streetlight, 
+and a GSM module for sending SMS alerts.
+All components were powered from the mains supply through an HLK-20M05 power module and an AMS1117-3.3 voltage regulator. 
+The complete circuit was drawn in a schematic editor and implemented on a custom two-layer PCB
+
+Testing confirmed that the system correctly switches the streetlight on at night and off during the day, and that it can detect bulb faults and send an SMS alert within a few seconds. The total component cost was kept below 7,000 LKR, 
+making the system affordable for small local government bodies.
+
+\subsection{Implications}
+
+This project shows that it is possible to build an effective, affordable, and automated streetlight management system using low-cost, widely available components.
+If deployed at scale, such a system could significantly reduce the energy wasted on daytime streetlight operation and reduce the delay between fault occurrence and fault repair. 
+Both of these outcomes would have a positive impact on public safety and on the budgets of local government bodies.
+
+\subsection{Future Work}
+
+The following improvements are planned for future versions of the system:
+
+\begin{itemize}
+    \item \textbf{Wi-Fi / Cloud Integration:} The ESP32 already has built-in Wi-Fi capability. A future version of the firmware could send fault alerts and operational data to a cloud-based dashboard, allowing a single operator to monitor all streetlights in an area from one screen.
+    \item \textbf{Dimming Control:} Instead of simply switching the light on or off, the system could be extended to dim the light during low-traffic hours using pulse-width modulation (PWM), further reducing energy consumption.
+    \item \textbf{Solar Power:} For areas where mains power is unreliable, the system could be adapted to run from a solar panel and battery.
+    \item \textbf{Multiple Fault Types:} The current system detects open-circuit faults (bulb failure). Future versions could also detect short-circuit faults and over-current conditions by adding more sophisticated signal processing to the ACS712 readings.
+    \item \textbf{GPS Location Reporting:} Adding a GPS module would allow the SMS alert to include the location of the faulty streetlight, making it easier for maintenance teams to find and fix the problem quickly.
+\end{itemize}
+\end{document}
